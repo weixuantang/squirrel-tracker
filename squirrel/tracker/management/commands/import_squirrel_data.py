@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from tracker.models import Squirrel
+import datetime
 
 class Command(BaseCommand):
     help = 'Import squirrel data from specified path'
@@ -31,7 +32,7 @@ class Command(BaseCommand):
                     unique_squirrel_id = line[2],
                     hectare = line[3],
                     shift = line[4],
-                    date = line[5],
+                    date = datetime.datetime.strptime(line[5],'%m%d%Y'),
                     hectare_squirrel_number = int(line[6]),
                     age = line[7],
                     primary_fur_color = line[8],
