@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 import random
 from .models import Squirrel
 from django.db.models import Avg,Max,Min,Count,StdDev
+from .forms import SquirrelForm
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 def showmap(request):
@@ -41,3 +43,13 @@ def sightings(request):
     context = {'sightings':sightings}
     return render(request, 'tracker/sightings.html', context)
 
+def edit(request, unique_squirrel_id):
+    squirrel = get_object_or_404(Squirrel, pk=unique_squirrel_id)
+    if request.method == 'POST':
+        form = SquirrelForm(instance=squirrel,data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/tracker/sightings')
+    else:
+        form = SquirrelForm(instance=squirrel)
+    return render(request, 'tracker/edit.html', {'form':form,'squirrel':squirrel})
