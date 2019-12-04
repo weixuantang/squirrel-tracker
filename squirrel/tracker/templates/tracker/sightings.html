@@ -1,0 +1,9 @@
+{% if sightings %}
+    <ul>
+    {% for squirrel in sightings %}
+        <li><a href="/trakcer/{{ squirrel.unique_squirrel_id }}/">{{ squirrel.unique_squirrel_id }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No squirrel data are available.</p>
+{% endif %}
