@@ -1,14 +1,9 @@
 from django.db import models
-from django.utils.translation import gettext as _
 
 class Squirrel(models.Model):
-    x = models.FloatField(
-        help_text=_('Longitude')
-    )
+    x = models.FloatField()
 
-    y = models.FloatField(
-        help_text=_('Latitude')
-    )
+    y = models.FloatField()
 
     unique_squirrel_id = models.CharField(
         max_length=50,
@@ -55,15 +50,18 @@ class Squirrel(models.Model):
     )
 
     highlight_fur_color = models.CharField(
-        max_length=50
+        max_length=50,
+        blank=True
     )
 
     combination_of_primary_and = models.CharField(
-        max_length=50
+        max_length=50,
+        blank=True
     )
 
     color_notes = models.CharField(
-        max_length=200
+        max_length=200,
+        blank=True
     )
 
     LOCATION_CHOICES = (
@@ -77,11 +75,13 @@ class Squirrel(models.Model):
     )
     
     above_ground_sighter = models.CharField(
-        max_length=10
+        max_length=10,
+        blank=True
     )
 
     specific_location = models.CharField(
-        max_length=100
+        max_length=100,
+        blank=True
     )
 
     running = models.BooleanField(default=False)
@@ -95,7 +95,8 @@ class Squirrel(models.Model):
     foraging = models.BooleanField(default=False)
     
     other_activities = models.CharField(
-        max_length=200
+        max_length=200,
+        blank=True
     )
     
     kuks = models.BooleanField(default=False)
@@ -115,7 +116,8 @@ class Squirrel(models.Model):
     runs_from = models.BooleanField(default=False)
     
     other_interactions = models.CharField(
-        max_length=200
+        max_length=200,
+        blank=True
     )
     
     def __str__(self):

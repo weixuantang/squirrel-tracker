@@ -1,0 +1,6 @@
+<h1>Edit Squirrel {{squirrel.unique_squirrel_id }}</h1>
+<form action="/tracker/sightings/{{squirrel.unique_squirrel_id}}" method="post">
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type="submit" value="Submit">
+</form>
