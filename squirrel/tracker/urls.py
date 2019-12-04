@@ -6,4 +6,8 @@ urlpatterns = [
         path('sightings/add',views.add, name='add'),
         path('sightings/added',views.added, name='added'),#temporary setting
         path('sightings/stats',views.showstats, name='showstats'),
+        path('sightings', views.sightings, name='sightings'),
         ]
+
+    
+

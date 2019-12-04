@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 import random
 from .models import Squirrel
 from django.db.models import Avg,Max,Min,Count,StdDev
@@ -35,5 +35,9 @@ def showstats(request):
         statslist.append([list(i.keys())[0],list(i.values())[0]])     
     statsdict = {'stats':statslist}
     return render(request,'tracker/stats.html',statsdict)
-        
-   
+
+def sightings(request):
+    sightings = Squirrel.objects.order_by('unique_squirrel_id')
+    context = {'sightings':sightings}
+    return render(request, 'tracker/sightings.html', context)
+
