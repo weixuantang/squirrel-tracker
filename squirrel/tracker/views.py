@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 import random
 from .models import Squirrel
 from django.db.models import Avg,Max,Min,Count,StdDev
-from .forms import SquirrelForm
+from .forms import SquirrelForm, AddForm
 from django.http import HttpResponseRedirect
 # Create your views here.
 
@@ -15,12 +15,18 @@ def showmap(request):
     return render(request,'tracker/map.html',context)
 
 def add(request):
-    return render(request,"tracker/add.html")
-    #remember to add a new Squirrel Object and write the template!
-    
-def added(request):
-    return "Successfully added!"
-    #need a html template, does not necessarily use this one
+    if request.method == 'POST':
+        form = AddForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/tracker/sightings')
+    else:
+        form = AddForm()
+
+    context ={
+            'form': form,
+    }
+    return render(request,'tracker/edit.html',context)
 
 def showstats(request):
     dictlist = [Squirrel.objects.aggregate(num_of_squirrels = Count('unique_squirrel_id')),
