@@ -1,9 +1,13 @@
 {% if sightings %}
+    <h1>All Squirrel Sightings</h1>
     <ul>
     {% for squirrel in sightings %}
-    <li><a href="/tracker/sightings/{{ squirrel.unique_squirrel_id }}">{{ squirrel.unique_squirrel_id }}</a></li>
+    	<li><a href="/tracker/sightings/{{ squirrel.unique_squirrel_id }}">{{ squirrel.unique_squirrel_id }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No squirrel data are available.</p>
+    <p>No squirrel data available.</p>
 {% endif %}
+<a href='/tracker/sightings/add'>Add a new sighting</a><br>
+<a href='/tracker/map'>See sightings map</a><br>
+<a href='/tracker/sightings/stats'>See sightings stats</a>

@@ -61,4 +61,4 @@ class Command(BaseCommand):
             squirrel.save()
             num += 1
 
-        self.stdout.write(self.style.SUCCESS('Successfully import %d squirrel data.' % num))
+        self.stdout.write(self.style.SUCCESS('Successfully imported %d squirrel data.' % num))
