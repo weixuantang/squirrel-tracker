@@ -1,64 +1,64 @@
 from django.core.management.base import BaseCommand, CommandError
 from tracker.models import Squirrel
 import datetime
+import csv
+
 
 class Command(BaseCommand):
     help = 'Import squirrel data from specified path'
 
     def add_arguments(self, parser):
-        parser.add_argument('path', nargs='+', type=str)
+        parser.add_argument('path')
         
     
     def handle(self, *args, **options):
-        import csv
-        path = options['path'][0]
-        f = open(path)
-        lines = csv.reader(f)
-        next(lines)
-        num = 0
-        
+        with open(options['path']) as fp:
+            reader = csv.DictReader(fp)
+            data = list(reader)
+
         def str2bool(string):
-            if string == 'true':
+            if string in ['true','True','TRUE']:
                 return True
-            elif string == 'false':
+            elif string in['false','False','TRUE']:
                 return False
             else:
                 return None
-
-        for line in lines:
-            squirrel, boolean = Squirrel.objects.get_or_create(
-                    x = float(line[0]),
-                    y = float(line[1]),
-                    unique_squirrel_id = line[2],
-                    hectare = line[3],
-                    shift = line[4],
-                    date = datetime.datetime.strptime(line[5],'%m%d%Y'),
-                    hectare_squirrel_number = int(line[6]),
-                    age = line[7],
-                    primary_fur_color = line[8],
-                    highlight_fur_color = line[9],
-                    combination_of_primary_and = line[10],
-                    color_notes = line[11],
-                    location = line[12],
-                    above_ground_sighter = line[13],
-                    specific_location = line[14],
-                    running = str2bool(line[15]),
-                    chasing = str2bool(line[16]),
-                    climbing = str2bool(line[17]),
-                    eating = str2bool(line[18]),
-                    foraging = str2bool(line[19]),
-                    other_activities = line[20],
-                    kuks = str2bool(line[21]),
-                    quaas = str2bool(line[22]),
-                    moans = str2bool(line[23]),
-                    tail_flags = str2bool(line[24]),
-                    tail_twitches = str2bool(line[25]),
-                    approaches = str2bool(line[26]),
-                    indifferent = str2bool(line[27]),
-                    runs_from = str2bool(line[28]),
-                    other_interactions = line[29]
+        
+        num = 0
+        for item in data:
+            squirrel = Squirrel(
+                longitude = float(item['x']),
+                latitude = float(item['y']),
+                unique_squirrel_id = item['unique_squirrel_id'],
+#                hectare = item['hectare'],
+                shift = item['shift'],
+                date = datetime.datetime.strptime(item['date'],'%m%d%Y'),
+#                hectare_squirrel_number = int(item['hectare_squirrel_number']),
+                age = item['age'],
+                primary_fur_color = item['primary_fur_color'],
+#                highlight_fur_color = item['highlight_fur_color'],
+#                combination_of_primary_and = item['combination_of_primary_and'],
+#                color_notes = item['color_notes'],
+                location = item['location'],
+#                above_ground_sighter = item['above_ground_sighter'],
+                specific_location = item['specific_location'],
+                running = str2bool(item['running']),
+                chasing = str2bool(item['chasing']),
+                climbing = str2bool(item['climbing']),
+                eating = str2bool(item['eating']),
+                foraging = str2bool(item['foraging']),
+                other_activities = item['other_activities'],
+                kuks = str2bool(item['kuks']),
+                quaas = str2bool(item['quaas']),
+                moans = str2bool(item['moans']),
+                tail_flags = str2bool(item['tail_flags']),
+                tail_twitches = str2bool(item['tail_twitches']),
+                approaches = str2bool(item['approaches']),
+                indifferent = str2bool(item['indifferent']),
+                runs_from = str2bool(item['runs_from']),
+#                other_interactions = item['other_interactions']
             )
-            if boolean:
-                num += 1
+            squirrel.save()
+            num += 1
 
         self.stdout.write(self.style.SUCCESS('Successfully import %d squirrel data.' % num))
