@@ -1,18 +1,18 @@
 from django.db import models
 
 class Squirrel(models.Model):
-    x = models.FloatField()
+    longitude = models.FloatField()
 
-    y = models.FloatField()
+    latitude = models.FloatField()
 
     unique_squirrel_id = models.CharField(
         max_length=50,
         primary_key=True
     )
 
-    hectare = models.CharField(
-        max_length=10
-    )
+#    hectare = models.CharField(
+#        max_length=10
+#    )
 
     SHIFT_CHOICES = (
         ('AM','AM'),
@@ -26,7 +26,7 @@ class Squirrel(models.Model):
 
     date = models.DateField()
 
-    hectare_squirrel_number = models.IntegerField()
+ #   hectare_squirrel_number = models.IntegerField()
     
     AGE_CHOICES = (
         ('Adult','Adult'),
@@ -49,20 +49,20 @@ class Squirrel(models.Model):
         choices=PRIMARY_FUR_COLOR_CHOICES
     )
 
-    highlight_fur_color = models.CharField(
-        max_length=50,
-        blank=True
-    )
+#    highlight_fur_color = models.CharField(
+#        max_length=50,
+#        blank=True
+#    )
 
-    combination_of_primary_and = models.CharField(
-        max_length=50,
-        blank=True
-    )
+#    combination_of_primary_and = models.CharField(
+#        max_length=50,
+#        blank=True
+#    )
 
-    color_notes = models.CharField(
-        max_length=200,
-        blank=True
-    )
+#    color_notes = models.CharField(
+#        max_length=200,
+#        blank=True
+#    )
 
     LOCATION_CHOICES = (
         ('Ground Plane','Ground Plane'),
@@ -74,10 +74,10 @@ class Squirrel(models.Model):
         choices=LOCATION_CHOICES
     )
     
-    above_ground_sighter = models.CharField(
-        max_length=10,
-        blank=True
-    )
+#    above_ground_sighter = models.CharField(
+#        max_length=10,
+#        blank=True
+#    )
 
     specific_location = models.CharField(
         max_length=100,
@@ -115,10 +115,10 @@ class Squirrel(models.Model):
     
     runs_from = models.BooleanField(default=False)
     
-    other_interactions = models.CharField(
-        max_length=200,
-        blank=True
-    )
+#    other_interactions = models.CharField(
+#        max_length=200,
+#        blank=True
+#    )
     
     def __str__(self):
         return self.unique_squirrel_id

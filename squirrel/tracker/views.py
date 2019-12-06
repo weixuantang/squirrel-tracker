@@ -1,16 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 import random
 from .models import Squirrel
-from django.db.models import Avg,Max,Min,Count,StdDev
 from .forms import SquirrelForm
-from django.http import HttpResponseRedirect
+from django.db.models import Avg,Max,Min,Count,StdDev
+
 # Create your views here.
 
 def showmap(request):
-    templist = random.sample(list(Squirrel.objects.all()),100)
-    sightings = []
-    for temp in templist:
-        sightings.append({'latitude':temp.y, 'longitude': temp.x})
+    sightings = random.sample(list(Squirrel.objects.all()),100)
+#    sightings = []
+#    for temp in templist:
+#        sightings.append({'latitude':temp.y, 'longitude': temp.x})
     context = {'sightings':sightings}
     return render(request,'tracker/map.html',context)
 
@@ -46,10 +46,15 @@ def sightings(request):
 def edit(request, unique_squirrel_id):
     squirrel = get_object_or_404(Squirrel, pk=unique_squirrel_id)
     if request.method == 'POST':
-        form = SquirrelForm(instance=squirrel,data=request.POST)
+        form = SquirrelForm(request.POST, instance=squirrel)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/tracker/sightings')
+            return redirect('/tracker/sightings')
     else:
         form = SquirrelForm(instance=squirrel)
-    return render(request, 'tracker/edit.html', {'form':form,'squirrel':squirrel})
+
+    context = {
+        'form':form,
+        'squirrel':squirrel,
+    }
+    return render(request, 'tracker/edit.html', context)
