@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext as _
 
 class Squirrel(models.Model):
     longitude = models.FloatField()
@@ -24,7 +25,9 @@ class Squirrel(models.Model):
         choices=SHIFT_CHOICES
     )
 
-    date = models.DateField()
+    date = models.DateField(
+        help_text=_('(yyyy-mm-dd)')
+    )
 
  #   hectare_squirrel_number = models.IntegerField()
     

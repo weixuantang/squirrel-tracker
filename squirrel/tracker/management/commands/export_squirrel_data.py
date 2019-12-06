@@ -83,5 +83,5 @@ class Command(BaseCommand):
                 })
                 num += 1
 
-        self.stdout.write(self.style.SUCCESS('Successfully export %d squirrel data.' % num))
+        self.stdout.write(self.style.SUCCESS('Successfully exported %d squirrel data.' % num))
 
